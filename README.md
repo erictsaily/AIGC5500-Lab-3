@@ -15,7 +15,7 @@ The dataset consists of 32x32 image in 10 classes: Airplanes, Cars, Birds, Cats,
 
 ## Results
 Stage               val accuracy   train time   trainable params
-Feature extraction:        0.XXX         X.Xs                  X
+Feature extraction:        0.760      372.91s               5130
 Fine - tuning:             0.XXX         X.Xs                  X
 
 ## Conclusion
