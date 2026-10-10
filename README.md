@@ -16,10 +16,18 @@ The dataset consists of 32x32 image in 10 classes: Airplanes, Cars, Birds, Cats,
 ## Results
 Stage               val accuracy   train time   trainable params
 Feature extraction:        0.760      372.91s               5130
-Fine - tuning:             0.XXX         X.Xs                  X
+Fine - tuning:             0.775      448.91s            8398858
 
 ## Conclusion
-which approach worked better on this dataset, and why, in terms of what fine-tuning changed that feature extraction could not.
+If the frozen backbone were left in train() mode, its BatchNorm running statistics would continue updating on the new dataset, changing the frozen features (which goes against the point).
+
+Fine tuning works slightly better on this dataset (with 10 epoch and a seed of 1), reaching a validation accuracy of 0.775 compared to 0.760 for feature extraction.
+
+With feature extraction, the pretrained backbone remained frozen, so only the new classification head could learn from CIFAR10. Fine tuning on the other hand, allowed the whole last block of the backbone to update, which let the model adjust its pretrained features to better fit the new dataset.
+
+This extra adjustment likely produced the small increase in validation accuracy, however, it came at the cost of requiring more training time and far more trainable parameters.
 
 ## Known limitations
-Anything you are aware of that does not work, or that you would improve with more time.
+One limitation that I know of is that my laptop isn't the best and running off of the CPU. The results may have differed if I was using a more powerful PC with a GPU.
+
+With more time I could try testing different numbers of epochs, different seeds, different datasets / subsets of CIFAR10, and different learning rates.
